@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <button id="btn">Show Weather</button>
+    <p id="city"></p>
+    <p id="coordinates"></p>
+    <p id="temperature"></p>
+
+    <script>
+        function getWeather(latitude, longitude) {
+            const apiKey = 'be2cc5aee1324127ca6fafaa7bcb6349'; // Replace with your OpenWeatherMap API key
+
+            // Fetch weather data
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    const temperature = data.main.temp;
+                    document.getElementById('temperature').textContent = `Temperature: ${temperature}°C`;
+                    document.querySelector("#city").textContent=data.name;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    document.getElementById('temperature').textContent = 'Error fetching weather data';
+                    
+                });
+        }
+
+        function success(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            document.getElementById('coordinates').textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            
+            // Fetch weather using coordinates
+            getWeather(latitude, longitude);
+        }
+
+        function error() {
+            document.getElementById('coordinates').textContent = 'Unable to retrieve location';
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(success, error);
+            } else {
+                document.getElementById('coordinates').textContent = 'Geolocation is not supported by your browser';
+            }
+        }
+
+        // Attach the getLocation function to the button click event
+        document.getElementById('btn').addEventListener('click', getLocation);
+    </script>
+</body>
+</html>
