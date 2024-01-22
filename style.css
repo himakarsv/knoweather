@@ -116,3 +116,25 @@ input[type="search"]:focus{
     align-items: center;
     justify-content: center;
 }
+@media screen and (min-width:200px) and (max-width:800px) {
+    .main-cont{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+    }
+}
+@media screen and (min-width:200px) and (max-width:650px) {
+    .main-cont{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+    }
+    #map{
+        height: 60vh;
+        width: 85%;
+    }
+}
